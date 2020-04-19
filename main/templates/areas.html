@@ -1,0 +1,23 @@
+{% extends 'main_base.html' %}
+
+{% load models/items %}
+
+{% block title %}Areas{% endblock %}
+
+{% block main_content %}
+    <div class="card" >
+      <h5 class="card-header bg-info">Locations</h5>
+      <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+              <div class="col-sm-2">
+                  <div class="card">
+                      <h5 class="card-header bg-secondary">Rat Cave</h5>
+                      <div class="card-body" style="padding: 1rem;">
+                          <h5><a href="/main/area">Go to rat cave</a></h5>
+                      </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+    </div>
+{% endblock %}

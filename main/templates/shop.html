@@ -1,0 +1,173 @@
+{% extends 'main_base.html' %}
+
+{% load template_filters %}
+
+{% block title %}Shop{% endblock %}
+
+
+{% block main_content %}
+    <div class="card" >
+      <h5 class="card-header bg-info">Shop</h5>
+      <div class="row">
+          <div class="col-lg-6" style="padding:1rem;">
+              <div class="card" style="margin-left: 0.5rem; margin-right: 0.5rem;">
+                  <h5 class="card-header bg-secondary">Player items</h5>
+                  <div class="card-body" style="padding: 1rem;">
+                      <table id="main_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Stats</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p_item in user.player.items.all %}
+                                <tr rowid="{{ p_item.id }}" slot="{{ p_item.item.eq_slot.name }}" eq="{{ p_item.player_eq.id }}">
+                                    <td>
+                                        {{ p_item.name }}
+                                    </td>
+                                    <td>
+                                        {% if p_item.item.item_type == 'armor' %}
+                                            Armor: {{ p_item.item.armor }}
+                                        {% else %}
+                                            Damage: {{ p_item.item.damage }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ p_item.item.price }}
+                                    </td>
+                                    <td>
+                                        <a onclick="sellItem(this)" href="#">
+                                            {% if p_item.player_eq == None %}
+                                                Sell
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6" style="padding:1rem;">
+              <div class="card" style="margin-left: 0.5rem; margin-right: 0.5rem;">
+                  <h5 class="card-header bg-secondary">Shop items</h5>
+                  <div class="card-body" style="padding: 1rem;">
+                      <table id="shop_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Stats</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p_item in ALL_ITEMS %}
+                                {%  with item=ALL_ITEMS|get_item:p_item %}
+                                    <tr rowid="{{ p_item }}">
+                                        <td>
+                                            {{ item.name }}
+                                        </td>
+                                        <td>
+                                            {% if item.item_type == 'armor' %}
+                                                Armor: {{ item.armor }}
+                                            {% else %}
+                                                Damage: {{ item.damage }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ item.shop_price }}
+                                            <a style="display:none">{{ item.price }}</a>
+                                        </td>
+                                        <td>
+                                            <a onclick="buyItem(this)" href="#">
+                                                Buy
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endwith %}
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#main_table').DataTable( {
+                rowId: 'rowId'
+            });
+            $("#main_table > tbody > tr").each(function () {
+                    if ($(this).attr('eq') != '') {
+                        $(this).find('td').css('background-color', '#10FF88')
+                    }
+                }
+            );
+            $('#shop_table').DataTable( {
+                rowId: 'rowId'
+            });
+        } );
+
+        function sellItem(el) {
+            let row = $(el).parent().parent()
+            // Notify server side
+            sendMessage({
+                'message': "sellItem",
+                'id': row.attr('rowId'),
+            })
+            addGold(parseInt(row.find('td:nth-child(3)').text()))
+            row.remove()
+        }
+        function buyItem(el) {
+            let row = $(el).parent().parent()
+            let currentGold = getGold()
+            let price = parseInt(row.find('td:nth-child(3)').text())
+            if(currentGold >= price) {
+                $('#error-tooltip').text("Item bought for " + price + " gold")
+                createPopper(el);
+                addGold(-price)
+                new_row = row.clone()
+                new_row.find("td:nth-child(4) > a").text("Sell")
+                new_row.find("td:nth-child(4) > a").attr('onclick', "sellItem(this)")
+                new_row.find("td:nth-child(3)").text(row.find("td:nth-child(3) > a").text())
+                $('#main_table > tbody').prepend(new_row);
+            } else {
+                $('#error-tooltip').text("Not enough gold")
+                createPopper(el);
+            }
+            // Notify server side
+            sendMessage({
+                'message': "buyItem",
+                'name': row.attr('rowId'),
+            })
+        }
+
+        function createPopper(el) {
+            $('#error-tooltip').css('display', 'block');
+            popperInstance = Popper.createPopper(el, document.querySelector('#error-tooltip'), {
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [0, 8],
+                  },
+                },
+              ],
+            });
+            setTimeout(function(){
+                    if (popperInstance) {
+                      popperInstance.destroy();
+                      popperInstance = null;
+                    }
+                    $('#error-tooltip').css('display', 'none');
+                }, 2000);
+        }
+    </script>
+{% endblock %}

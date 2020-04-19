@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Epic F</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="{% url 'logout' %}">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div id="error-tooltip" role="tooltip">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-auto">
+                <div class="container" style="margin: 0.5rem;">
+                    <div class="card" style="width: 18rem;">
+                      <h5 class="card-header bg-secondary">General</h5>
+                      <div class="card-body">
+                        <h5>Hi {{ user.username }}!</h5>
+                          <h4 class="mb-0">Energy</h4>
+                            <div class="d-inline">
+                                <p class="d-inline card-text mb-auto" id="player_energy_num">{{ user.player.energy }}</p> / <p class="d-inline card-text mb-auto" id="player_energy_max">{{ user.player.max_energy }}</p>
+                            </div>
+                            <div class="progress">
+                                <div id="player_energy_bar" class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+                            </div>
+                          <h4 class="mb-0">Gold</h4>
+                          <p class="d-inline card-text mb-auto" id="player_gold">{{ user.player.gold }}</p>
+                      </div>
+                    </div>
+                </div>
+                <div class="container" style="margin: 0.5rem;">
+                    <div class="card" style="width: 18rem;">
+                      <h5 class="card-header bg-secondary">Places</h5>
+                      <div class="card-body" style="padding: 0rem;">
+                        <ul class="nav left-menu flex-column">
+                          <li class="nav-item left-menu">
+                              <a class="nav-link {% if request.resolver_match.url_name == "home" %}active{% endif %}" href="{% url "home" %}">Home</a>
+                          </li>
+                          <li class="nav-item left-menu">
+                              <a class="nav-link {% if request.resolver_match.url_name == "stats" %}active{% endif %}" href="/main/stats">Character</a>
+                          </li>
+                          <li class="nav-item left-menu">
+                              <a class="nav-link {% if request.resolver_match.url_name == "town" %}active{% endif %}" href="/main/town">Town</a>
+                          </li>
+                          <li class="nav-item left-menu">
+                              <a class="nav-link {% if request.resolver_match.url_name == "areas" %}active{% endif %}" href="/main/areas">Areas</a>
+                          </li>
+                          <li class="nav-item left-menu">
+                              <a class="nav-link {% if request.resolver_match.url_name == "items" %}active{% endif %}" href="/main/items">Items</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"  style="margin: 0.5rem;">
+                {% block main_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateEnergy() {
+            var current_energy = parseInt($("#player_energy_num").text())
+            var max_energy = parseInt($("#player_energy_max").text())
+            $("#player_energy_bar").attr('aria-valuenow', current_energy)
+            $("#player_energy_bar").attr('style', 'width:' + current_energy + '%')
+            if(current_energy < max_energy) {
+                if(!$("#player_energy_bar").hasClass("progress-bar-animated")) {
+                    $("#player_energy_bar").addClass("progress-bar-animated");
+                }
+            } else {
+                $("#player_energy_bar").removeClass("progress-bar-animated");
+            }
+        }
+        updateEnergy()
+        var commsSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws');
+
+        commsSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var energy_level = data['new_energy_level'];
+            $("#player_energy_num").text(energy_level)
+            updateEnergy()
+        };
+
+        commsSocket.onclose = function(e) {
+            console.error('Comms socket closed unexpectedly');
+        };
+
+        function sendMessage(msg) {
+            commsSocket.send(JSON.stringify(msg));
+        }
+        function addGold(gold) {
+            var currentGold = parseInt($('#player_gold').text())
+            $('#player_gold').text(currentGold + gold)
+        }
+        function getGold() {
+            return parseInt($('#player_gold').text())
+        }
+    </script>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>&nbsp;<a href="{% url 'signup' %}">sign up</a>
+{% endif %}
+{% endblock %}

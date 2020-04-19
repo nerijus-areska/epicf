@@ -1,0 +1,137 @@
+{% extends 'main_base.html' %}
+
+{% load template_filters %}
+
+{% block title %}Items{% endblock %}
+
+{% block main_content %}
+    <div class="card" >
+      <h5 class="card-header bg-info">Items</h5>
+      <div class="row">
+          <div class="col-sm-2">
+            {% for slot in ARMOR_SLOTS %}
+                <div class="row">
+                    <div class="col-sm-12" style="padding:1rem;">
+                      <div class="card" style="margin-left:0.5rem;">
+                          <h6 class="card-header bg-secondary">{{ slot }}</h6>
+                          <div id="eq_{{ slot }}" class="card-body" style="padding: 0.5rem;">
+                              {% with item=equiped_items|get_item:slot %}
+                                <h6>{{ item.name }}</h6>
+                                  <a>Armor: {{ item.item.armor }}</a>
+                              {% endwith %}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+          {% endfor %}
+          </div>
+          <div class="col-sm-2">
+              <div class="row">
+                <div class="col-sm-12" style="padding:1rem;">
+                  <div class="card" style="margin-left:0.5rem;">
+                      <h6 class="card-header bg-secondary">WEAPON</h6>
+                      <div id="eq_WEAPON" class="card-body" style="padding: 0.5rem;">
+                          {% with item=equiped_items|get_item:'WEAPON' %}
+                            <h6>{{ item.name }}</h6>
+                              <a>Damage: {{ item.item.damage }}</a>
+                          {% endwith %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-lg-8" style="padding:1rem;">
+              <div class="card" style="margin-left: 0.5rem; margin-right: 0.5rem;">
+                  <h5 class="card-header bg-secondary">Items</h5>
+                  <div class="card-body" style="padding: 1rem;">
+                      <table id="main_table" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Stats</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p_item in user.player.items.all %}
+                                <tr rowid="{{ p_item.id }}" slot="{{ p_item.item.eq_slot.name }}" eq="{{ p_item.player_eq.id }}">
+                                    <td>
+                                        {{ p_item.name }}
+                                    </td>
+                                    <td>
+                                        {% if p_item.item.item_type == 'armor' %}
+                                            Armor: {{ p_item.item.armor }}
+                                        {% else %}
+                                            Damage: {{ p_item.item.damage }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a onclick="equipItem('{{ p_item.item.eq_slot.name }}', this)" href="#">
+                                            {% if p_item.player_eq != None %}
+                                                Remove
+                                            {% else %}
+                                                Equip
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#main_table').DataTable( {
+                rowId: 'rowId'
+            });
+            $("#main_table > tbody > tr").each(function () {
+                    if ($(this).attr('eq') != '') {
+                        $(this).find('td').css('background-color', '#10FF88')
+                    }
+                }
+            );
+        } );
+        function equipItem(slot, el) {
+            let row = $(el).parent().parent()
+            if(row.attr('eq') == '') {
+               $("#main_table > tbody > tr").each(function () {
+                    if ($(this).attr('slot') == slot &&
+                        $(this).attr('rowId') != $(el).parent().parent().attr('rowId') &&
+                        $(this).attr('eq') != '') {
+                            $(this).find('td').css('background-color', '')
+                            $(this).find('td').first().find('b').remove()
+                            $(this).attr('eq', '')
+                            $(this).find('td').last().find('a').text("Equip")
+                        }
+                });
+                row.find('td').last().find('a').text("Remove")
+                row.attr('eq', 'yes')
+                row.find('td').css('background-color', '#10FF88')
+
+                $("#eq_" + slot).find("h6").text(row.find('td').first().text())
+                $("#eq_" + slot).find("a").text(row.find('td:nth-child(2)').text())
+            } else {
+                row.find('td').css('background-color', '')
+                row.find('td').last().find('a').text("Equip")
+                row.attr('eq', '')
+
+                $("#eq_" + slot).find("h6").text('')
+                if(slot == 'WEAPON') {
+                    $("#eq_" + slot).find("a").text('Damage:')
+                } else{
+                    $("#eq_" + slot).find("a").text('Armor:')
+                }
+            }
+            // Notify server side
+            sendMessage({
+                'message': "equip",
+                'id': row.attr('rowId'),
+            })
+        }
+    </script>
+{% endblock %}
