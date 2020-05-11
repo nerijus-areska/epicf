@@ -1,0 +1,62 @@
+MILESTONE 1 ( copy/pasta first from milestones doc )
+
+Milestone 1: 2 months - until 2020 May
+  Have a functional and playable version of: 
+	- ONE area with full combat(but basic, just weapons) ~10 rooms? Multiple branches though
+	- ONE town with weapons/armor shop
+	- Inventory and Equipment screens
+	- Stats screen
+	- Gold is everywhere - in main screen close to energy..
+	- polished a bit, but not much
+  Make it realistic- meaning, that 3/4 of this area CAN be completed via a week and 8-10 runs. ( We only have runs now to spend energy, nothing else ). The rest of the area can maybe be completed with hard grinding, but final boss probably not. Escape mechanics has to be very viable (maybe loose loot?)
+  You can test it through easier with enhanced game timing
+  This demo should be playable by testers (but should not take them that week - maybe a day? or maybe just few hours)
+
+
+TASKS:
+	VV Web socket research - make energy bar refresh on server command 
+Lots of stuff here, Installed channels, Redis
+Idea is to get every user its individual group, where the messages will only be sent to him (surprisingly we need this to support multiple tabs with our page open)
+But also later we will use the same channel to join a multicast group, where for example chat room messages would go to
+
+	VV	 Implement Web sockets for Energy points. We just need to send to individual_group_{user_id} some json with new energy level in it from cron job. Also parse this in Java script. So a bit of research into Jquery
+	VV Have a visual energy bar, not just a number ( also show max, and time until full )
+	VV Add gold coins. Show them on screen next to energy bar - do not live update it for now ( maybe not needed for milestone 1 )
+	VV Also add some basic Home ( just say hello in there - but have a nice notification panel )
+	VV Add Menu view - viewable from everywhere, so keep it in Home
+		Home is your screen, which shows left top info screen ( energy/money ), left mid menu, right -> current page
+	VV Implement stats, show them in stats screen ( this is not interactive at all in this milestone ( only show max HP, it's always max when not in area )
+		VV Copy stats from Dota, add them to DB
+		VV Create a new screen - also navigation from menu should work full for stats & Home
+		VV Menu items should show the one being active
+	VV Placeholders for every screen : town->shop, areas->area1(rat cave), items
+
+	VV Implement items list / equipment Torn style
+		VV Create data structures for item list - we use ArrayList for a field
+		VV Create data structures for equipment
+		VV Show 4 armor slots + 1 weapon slot + 1 shield slot on the left side vertically in form of little cards ( show some stats there as well)
+		VV Show a list of items ( research on the lists - maybe use datatables. We need pagination / full ajax???)
+		VV Implement equipment action
+		VV Add All of remaining item slots - test it out	
+		
+	VV Implement shop - similar to the items/equipment screen
+		VV Data structures - items player side stays the same, have shop item list in code (as a SINGLE shop with all the possible items in game)
+		VV Copy/paste the items list from items page, populate it ( leave the equip logic, just comment it out )
+		VV Calculate shop price ( automatically, when constructing objects )
+		VV Instead of 'equip' have 'buy' for shop items, and 'sell' for player items, implement all in javascript
+		VV Add server side calls
+
+	- Implement ONE basic area
+		- basic combat screen ( you can only attack with your weapon ), should show hit points
+		- Damage mechanics - calculate damage done/received - update hit points
+		- Visualize damage/miss ( no combat log yet, but have a future place for it)
+		- Dead enemy generates loot - functionality to take / take all
+		- Data structures for the area - one enemy for one room, next room / next list of rooms.
+		- Admin screen for area edit - complex task
+			- placeholder
+		- Branching - pick one of the areas, which to go to next
+		- Escape mechanics
+		- Dying mechanics
+		- Finishing area mechanics - HP always resets to max upon entering area
+	- Do some balancing - this should feel real
+

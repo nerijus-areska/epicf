@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f1c6338-333b-4a13-8b67-d7ea0f388903" name="Default Changelist" comment="" />
+    <list default="true" id="6f1c6338-333b-4a13-8b67-d7ea0f388903" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/areas.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/areas.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +34,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="JupyterTrust" id="2d2a3a7e-6bbb-42c4-9e8f-94a4b548cde6" />
   <component name="ProjectId" id="1YWfGfEo2mKgZ4SSeiKGEZOlHNZ" />
   <component name="ProjectViewState">
@@ -41,7 +47,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../treo/web" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -104,6 +110,7 @@
       <workItem from="1584774940644" duration="11237000" />
       <workItem from="1584817932485" duration="22013000" />
       <workItem from="1584988669521" duration="1981000" />
+      <workItem from="1589215021288" duration="487000" />
     </task>
     <servers />
   </component>
