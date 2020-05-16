@@ -41,6 +41,8 @@ class Player(models.Model):
     hp = models.IntegerField(default=100)
     max_hp = models.IntegerField(default=100)
 
+    current_town = models.CharField(default='Espin', max_length=100)
+
     def equiped_item_map(self):
         # TODO: optimization This should only be called once per page request, and cached in a variable
         return {eq_item.item().eq_slot.name: eq_item for eq_item in self.eq_items.all()}

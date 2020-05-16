@@ -14,4 +14,10 @@ Few things to consider:
 	
 	- so each user would have a different area also with different exploration state. These factors could make even harder areas easier and more profitable
 
+
+First things to do:
+	
+	- create some basic structures, think about monster generation and exploration
+	- try to draw some of that in Web
+	- We aim for a gameplay, where a player is able to navigate rooms, without fighting the monsters. The map should update
 	- 

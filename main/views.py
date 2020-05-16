@@ -5,9 +5,12 @@ from django.http import Http404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
+from .model.areas import AREAS
 
 from .models import Question, Player
 from .model.Items import ALL_ITEMS, EQ_SLOT, ARMOR_SLOTS
+
+import json
 
 
 def signup(request):
@@ -45,6 +48,12 @@ def shop(request):
         'equiped_items': request.user.player.equiped_item_map(),
     }
     return render(request, 'shop.html', context)
+
+def area(request, area_code):
+    context = {
+        'area': json.dumps(AREAS[area_code])
+    }
+    return render(request, 'area.html', context)
 
 def base(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]

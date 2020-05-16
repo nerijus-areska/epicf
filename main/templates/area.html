@@ -4,6 +4,61 @@
 
 {% block main_content %}
     <div class="card" >
-      <h5 class="card-header bg-info">Rat cave</h5>
+      <h5 class="card-header bg-info">{{ area.name }}</h5>
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+              <div class="col-sm-2">
+                  Map
+                  <canvas id="myCanvas" width="400" height="800" style="border:1px solid #d3d3d3;">
+                  </canvas>
+              </div>
+          </div>
+      </div>
     </div>
+
+    <script>
+        var BASE_X = 180;
+        var BASE_Y = 50;
+        var RECT_SIZE = 40;
+        var area_map = {% autoescape off %}{{ area }}{% endautoescape %}
+
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+
+        var first_room = area_map.rooms["1"];
+        draw_room(first_room, 0, 0, 0)
+
+        function draw_room(room, x_offset, y_offset, branch_level) {
+            console.log('will draw room ' + room.monster + ' next rooms: ' + room.next_rooms.length);
+            ctx.beginPath();
+            ctx.lineWidth = "4";
+            ctx.strokeStyle = "green";
+            ctx.rect(BASE_X + x_offset, BASE_Y + y_offset, RECT_SIZE, RECT_SIZE);
+            ctx.stroke();
+
+            var branch_x_offset = 100;
+            if(branch_level > 0) branch_x_offset = 50;
+            if(room.next_rooms.length == 2) {
+                draw_room(area_map.rooms[room.next_rooms[0]], x_offset - branch_x_offset, y_offset + 100, branch_level + 1);
+                draw_room(area_map.rooms[room.next_rooms[1]], x_offset + branch_x_offset, y_offset + 100, branch_level + 1);
+            } else if(room.next_rooms.length == 1) {
+                ctx.beginPath();
+                ctx.lineWidth = "2";
+                ctx.strokeStyle = "gray";
+                draw_line(BASE_X + x_offset + RECT_SIZE / 2, BASE_Y + y_offset + RECT_SIZE,
+                            BASE_X + x_offset + RECT_SIZE / 2, BASE_Y + y_offset + 100);
+                ctx.stroke();
+                draw_room(area_map.rooms[room.next_rooms[0]], x_offset, y_offset + 100, branch_level);
+            }
+        }
+
+        function draw_line(from_x, from_y, to_x, to_y) {
+            ctx.beginPath();
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "gray";
+            ctx.moveTo(from_x, from_y);
+            ctx.lineTo(to_x, to_y);
+            ctx.stroke();
+        }
+    </script>
 {% endblock %}

@@ -2,8 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f1c6338-333b-4a13-8b67-d7ea0f388903" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/main/migrations/0003_player_current_town.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/model/areas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/model/towns.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/areas" beforeDir="false" afterPath="$PROJECT_DIR$/docs/areas" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/templates/area.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/area.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/templates/areas.html" beforeDir="false" afterPath="$PROJECT_DIR$/main/templates/areas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/global.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,16 +48,21 @@
   </component>
   <component name="JupyterTrust" id="2d2a3a7e-6bbb-42c4-9e8f-94a4b548cde6" />
   <component name="ProjectId" id="1YWfGfEo2mKgZ4SSeiKGEZOlHNZ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../treo/web" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -110,12 +124,17 @@
       <workItem from="1584774940644" duration="11237000" />
       <workItem from="1584817932485" duration="22013000" />
       <workItem from="1584988669521" duration="1981000" />
-      <workItem from="1589215021288" duration="487000" />
+      <workItem from="1589215021288" duration="3039000" />
+      <workItem from="1589303654761" duration="3303000" />
+      <workItem from="1589380748064" duration="7270000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583065282100">
@@ -134,10 +153,11 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="854" height="466" key="DebuggerActiveHint/67.27.1853.1053@67.27.1853.1053" timestamp="1584820164757" />
-    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1584520310855">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="1041" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1589432064070">
+      <screen x="0" y="27" width="3840" height="1053" />
     </state>
-    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1584520310855" />
+    <state x="1041" y="310" width="424" height="484" key="FileChooserDialogImpl/0.27.3840.1053@0.27.3840.1053" timestamp="1589432064070" />
+    <state x="766" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1589310145825" />
     <state width="1807" height="278" key="GridCell.Tab.0.bottom" timestamp="1584960485314">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -170,13 +190,19 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="195" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1584960485311" />
-    <state x="482" y="187" key="SettingsEditor" timestamp="1584820113150">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="860" y="187" key="SettingsEditor" timestamp="1589258035003">
+      <screen x="0" y="27" width="3840" height="1053" />
     </state>
+    <state x="860" y="187" key="SettingsEditor/0.27.3840.1053@0.27.3840.1053" timestamp="1589258035003" />
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1584820113150" />
-    <state x="562" y="249" width="863" height="606" key="find.popup" timestamp="1584299034565">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="728" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1589303891682">
+      <screen x="0" y="27" width="3840" height="1053" />
     </state>
+    <state x="728" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.27.3840.1053@0.27.3840.1053" timestamp="1589303891682" />
+    <state x="1026" y="249" width="1789" height="606" key="find.popup" timestamp="1589306342054">
+      <screen x="0" y="27" width="3840" height="1053" />
+    </state>
+    <state x="1026" y="249" width="1789" height="606" key="find.popup/0.27.3840.1053@0.27.3840.1053" timestamp="1589306342054" />
     <state x="562" y="249" width="863" height="606" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1584299034565" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1584989444223">
       <screen x="67" y="27" width="1853" height="1053" />

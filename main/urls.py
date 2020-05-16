@@ -12,7 +12,7 @@ urlpatterns = [
     path('shop/', views.shop, name='shop'),
     path('items/', views.items, name='items'),
     path('areas/', TemplateView.as_view(template_name='areas.html'), name='areas'),
-    path('area/', TemplateView.as_view(template_name='area.html'), name='area'),
+    path('area/<str:area_code>', views.area, name='area'),
 
     # ex: /main/5/
     path('<int:question_id>/', views.detail, name='detail'),
