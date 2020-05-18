@@ -4,7 +4,7 @@ AREAS = {
             "name": "Rat Cave",
             "rooms":
                 {
-                    "1":
+                    "1_1":
                     {
                         "monster": "rat",
                         "next_rooms": ["2_1", "2_2"],
@@ -16,7 +16,7 @@ AREAS = {
                     "2_1":
                     {
                         "monster": "rat",
-                        "next_rooms": [],
+                        "next_rooms": ["4_2"],
                         "tiers": [
                             {1: 80},
                             {2: 20}
@@ -36,7 +36,7 @@ AREAS = {
                     "3_1":
                     {
                         "monster": "bat",
-                        "next_rooms": [],
+                        "next_rooms": ["4_2"],
                         "tiers": [
                             {1: 80},
                             {2: 20}
@@ -54,6 +54,47 @@ AREAS = {
                         "explored": False
                     },
                     "4_1":
+                    {
+                        "monster": "bat",
+                        "next_rooms": ["5_1"],
+                        "tiers": [
+                            {1: 80},
+                            {2: 20}
+                        ],
+                        "explored": False
+                    }
+                    ,
+                    "4_2":
+                    {
+                        "monster": "bat",
+                        "next_rooms": ["6_1"],
+                        "tiers": [
+                            {1: 80},
+                            {2: 20}
+                        ],
+                        "explored": False
+                    },
+                    "5_1":
+                    {
+                        "monster": "bat",
+                        "next_rooms": ["6_1"],
+                        "tiers": [
+                            {1: 80},
+                            {2: 20}
+                        ],
+                        "explored": False
+                    },
+                    "6_1":
+                    {
+                        "monster": "bat",
+                        "next_rooms": ["7_1"],
+                        "tiers": [
+                            {1: 80},
+                            {2: 20}
+                        ],
+                        "explored": False
+                    },
+                    "7_1":
                     {
                         "monster": "bat",
                         "next_rooms": [],
